@@ -77,4 +77,56 @@
 //--------------------------TASK 5------------------------------------
 
 
+let words: Array<string> = [];
+
+
+document.querySelector('#add_BTN').addEventListener('click',function(){
+    let newWord:string = (document.querySelector('#input_world') as HTMLInputElement).value;
+    words.push(newWord);
+    renderBadWords();
+    (document.querySelector('#input_world') as HTMLInputElement).value = ''    
+})
+
+document.querySelector('#reset_BTN').addEventListener('click',function(){
+    document.querySelector('.bad').textContent = ''
+    words = [];
+    (document.querySelector('#text_cenzor') as HTMLInputElement).value = ''
+})
+
+
+function renderBadWords(): void{
+    document.querySelector('.bad').textContent = '';
+    for(let i = 0;i<words.length;i++){
+        if(i == 0){
+            document.querySelector('.bad').textContent = words[i]
+        }
+        else{
+            document.querySelector('.bad').textContent += `,${ words[i]}` 
+        }
+    }
+}
+
+document.querySelector('#cenzor').addEventListener('click',function(){
+    
+    for(let i = 0;i<words.length;i++){
+        let text:string = (document.querySelector('#text_cenzor') as HTMLInputElement).value;
+        replaceAll(text,words[i])
+    }
+    
+})
+
+
+
+function replaceAll(str:string, find:string) {
+    let replace:string ='';
+    for(let i = 0;i<find.length;i++){
+        replace += '*'
+    }
+    str = str.replace(new RegExp(find, 'g'), replace);
+    (document.querySelector('#text_cenzor') as HTMLInputElement).value = str;
+
+}
+
+
+
 
